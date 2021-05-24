@@ -14,7 +14,7 @@ export class App extends Component {
         return (
             <div>
                 <h1>Welcome { this.state.name } </h1>
-                <button onClick={ () => this.setState({name: "Jeremy"})} > change name</button>
+                <button onClick={ () => this.setState({name: "Tesla"})} > change name</button>
             </div>
         );
     }
