@@ -1,14 +1,12 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlPlugin = require("html-webpack-plugin");
 
 module.exports = {
-    entry: { 
-        main: path.resolve(__dirname, './src/index.js')
-    },
+    entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: '[name].bundle.js',
+        path: path.join(__dirname, '/build'),
+        filename: 'bundle.js',
     },
     devServer: {
         port: 3010,
@@ -23,26 +21,32 @@ module.exports = {
                     extensions: ['.js', '.jsx'],
                 },
                 use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
+                    loader: 'babel-loader'
                 }
             },
             {
                 test: /\.(scss|css)$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                     MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'sass-loader',
-                    'style-loader',
+                    'sass-loader'
                 ],
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: "html-loader"
+                    }
+                ]
             }
         ]
     },
-    plugins: [new MiniCssExtractPlugin(),
-        new HtmlWebpackPlugin({
-            title: 'Weibens awesome'
+    plugins: [
+        new MiniCssExtractPlugin(),
+        new HtmlPlugin({ 
+            filename: "index.html", 
+            template: "./src/index.html"
         })
     ],
 }
